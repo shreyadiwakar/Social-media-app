@@ -44,25 +44,26 @@ The frontend is built using React with Hooks, Context API, and React Query for e
 - MySQL
 
 **Authentication & Tools:**
-- JWT (JSON Web Token)
-- Cookies
+- JWT (JSON Web Token) for user authentication
+- Cookies for session management
 - Multer (File Uploads)
 - Axios
+- bcryptjs for password hashing and security  
 
 ---
 
 ##  Project Structure
-.
-├── api/                  # Node.js + Express backend
-│   ├── controllers/      # Logic for routes
-│   ├── routes/           # API endpoints
-│   └── connect.js        # MySQL connection logic
-└── client/               # React frontend
-    ├── src/
-    │   ├── components/   # Reusable UI elements
-    │   ├── context/      # Auth & Theme Context
-    │   └── pages/        # View components (Home, Profile, Login)
-    └── public/           # Static assets
+-.
+-├── api/                  # Node.js + Express backend
+-│   ├── controllers/      # Logic for routes
+-│   ├── routes/           # API endpoints
+-│   └── connect.js        # MySQL connection logic
+-└── client/               # React frontend
+-    ├── src/
+-    │   ├── components/   # Reusable UI elements
+-    │   ├── context/      # Auth & Theme Context
+-    │   └── pages/        # View components (Home, Profile, Login)
+-    └── public/           # Static assets
 
 
 ---
