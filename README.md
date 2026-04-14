@@ -65,7 +65,7 @@ The frontend is built using React with Hooks, Context API, and React Query for e
     │   ├── context/      # Auth & Theme Context
     │   └── pages/        # View components (Home, Profile, Login)
     └── public/           # Static assets
-
+```
 ---
 
 ##  Installation
@@ -75,14 +75,14 @@ The frontend is built using React with Hooks, Context API, and React Query for e
 ```bash
 git clone https://github.com/your-username/social-media-app.git
 cd social-media-app
-
+```
 ### 2. Backend Setup
 
 ```bash
 cd api
 npm install
 npm start
-
+```
 ##  Database Schema
 
 The backend relies on five core tables. To set this up, ensure your MySQL workbench contains:
