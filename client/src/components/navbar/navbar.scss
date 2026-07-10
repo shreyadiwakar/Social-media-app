@@ -60,43 +60,70 @@
       }
 
       .user {
-        a{
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 500;
+        cursor: pointer;
 
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          font-weight: 500;
-  
-          @include tablet{
-            display: none;
-          }
-  
-          img {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            object-fit: cover;
-          }
+        img {
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          object-fit: cover;
         }
+
         span {
           font-weight: 600;
         }
 
-      }
-      button {
-      background-color: #ff4d4f;
-      color: white;
-      border: none;
-      padding: 6px 14px;
-      border-radius: 20px;
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: 500;
-      transition: all 0.3s ease;
-      }
-      button:hover {
-        background-color: #e63946;
-        transform: scale(1.05);
+        .userMenu {
+          position: absolute;
+          top: 40px;
+          right: 0;
+          padding: 8px;
+          border-radius: 8px;
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+          min-width: 120px;
+          z-index: 1000;
+          box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15);
+          background-color: themed("bg");
+          border: 1px solid themed("border");
+          color: themed("textColor");
+
+          a {
+            text-decoration: none;
+            color: inherit;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: 4px;
+            transition: background 0.2s;
+            display: block;
+
+            &:hover {
+              background-color: themed("bgSoft");
+            }
+          }
+
+          .logoutItem {
+            color: #ff4d4f;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 6px 12px;
+            border-radius: 4px;
+            transition: background 0.2s;
+            display: block;
+
+            &:hover {
+              background-color: themed("bgSoft");
+            }
+          }
+        }
       }
     }
   }

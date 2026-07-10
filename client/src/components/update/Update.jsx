@@ -66,15 +66,19 @@ const Update = ({ setOpenUpdate, user }) => {
   const getPreviewImage = (file, existingPic) => {
     if (file) return URL.createObjectURL(file);
     if (!existingPic) return "";
-    return existingPic.includes("http") 
-      ? existingPic 
-      : "http://localhost:8800/upload/" + existingPic;
+    return existingPic.includes("http")
+      ? existingPic
+      : "http://localhost:3000/upload/" + existingPic;
   };
 
   return (
-    <div className="update">
+    <div className="update" onClick={(e) => e.target === e.currentTarget && setOpenUpdate(false)}>
       <div className="wrapper">
-        <h1>Update Your Profile</h1>
+        <div className="modalHeader">
+          <h1>Update Your Profile</h1>
+          <button className="close" onClick={() => setOpenUpdate(false)}>close</button>
+        </div>
+
         <form>
           <div className="files">
             {/* COVER PICTURE */}
@@ -122,12 +126,13 @@ const Update = ({ setOpenUpdate, user }) => {
 
           <label>Website</label>
           <input type="text" name="website" value={texts.website} onChange={handleChange} />
+        </form>
 
+        <div className="modalFooter">
           <button onClick={handleClick} disabled={mutation.isPending}>
             {mutation.isPending ? "Updating..." : "Update"}
           </button>
-        </form>
-        <button className="close" onClick={() => setOpenUpdate(false)}>close</button>
+        </div>
       </div>
     </div>
   );

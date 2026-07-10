@@ -10,18 +10,19 @@ import Navbar from "./components/navbar/Navbar";
 import LeftBar from "./components/leftBar/LeftBar";
 import Home from "./pages/home/Home";
 import Profile from "./pages/profile/Profile";
+import Explore from "./pages/explore/Explore";
 import "./style.scss";
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
 import { AuthContext } from "./context/authContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
+const queryClient = new QueryClient();
+
 function App() {
   const { currentUser } = useContext(AuthContext);
 
   const { darkMode } = useContext(DarkModeContext);
-
-  const queryClient = new QueryClient();
 
   const Layout = () => {
     return (
@@ -30,7 +31,7 @@ function App() {
           <Navbar />
           <div style={{ display: "flex" }}>
             <LeftBar />
-            <div style={{ flex: 6 }}>
+            <div style={{ flex: 6, minWidth: 0 }}>
               <Outlet />
             </div>
           </div>
@@ -63,6 +64,10 @@ function App() {
         {
           path: "/profile/:id",
           element: <Profile />,
+        },
+        {
+          path: "/explore",
+          element: <Explore />,
         },
       ],
     },

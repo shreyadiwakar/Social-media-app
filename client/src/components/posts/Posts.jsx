@@ -1,9 +1,13 @@
 import Post from "../post/Post";
 import "./posts.scss";
 import { useQuery } from "@tanstack/react-query";
+import { useContext } from "react";
 import { makeRequest } from "../../axios";
+import { SearchContext } from "../../context/searchContext";
 
 const Posts = ({ userId }) => {
+  const { searchQuery } = useContext(SearchContext);
+
   const { isLoading, error, data } = useQuery({
     queryKey: ["posts", userId],
 
@@ -14,7 +18,13 @@ const Posts = ({ userId }) => {
       return res.data;
     },
   });
-  console.log(data);
+
+  const filteredPosts = searchQuery
+    ? data?.filter((post) => 
+        (post.desc && post.desc.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        (post.name && post.name.toLowerCase().includes(searchQuery.toLowerCase()))
+      )
+    : data;
 
   return (
     <div className="posts">
@@ -22,8 +32,8 @@ const Posts = ({ userId }) => {
         "Something went wrong!"
       ) : isLoading ? (
         "Loading..."
-      ) : data?.length ? (
-        data.map((post) => <Post post={post} key={post.id} />)
+      ) : filteredPosts?.length ? (
+        filteredPosts.map((post) => <Post post={post} key={post.id} />)
       ) : (
         "No posts found"
       )}

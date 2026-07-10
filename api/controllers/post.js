@@ -35,6 +35,7 @@ export const getPosts = (req, res) => {
         LEFT JOIN relationships AS r 
           ON (p.userId = r.followedUserId)
         WHERE r.followerUserId = ? OR p.userId = ?
+        GROUP BY p.id
         ORDER BY p.createdAt DESC
       `;
       values = [userInfo.id, userInfo.id];

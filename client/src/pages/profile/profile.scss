@@ -25,6 +25,8 @@
         right: 0;
         margin: auto;
         top: 200px;
+        background-color: themed("bg");
+        border: 5px solid themed("bg");
       }
     }
     .profileContainer {

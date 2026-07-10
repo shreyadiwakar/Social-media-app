@@ -8,17 +8,30 @@ export const getStories = (req, res) => {
   jwt.verify(token, "secretkey", (err, userInfo) => {
     if (err) return res.status(403).json("Token is not valid!");
 
-    const q = `SELECT s.*, u.name FROM stories AS s 
-               JOIN users AS u ON (u.id = s.userId)
-               LEFT JOIN relationships AS r ON (s.userId = r.followedUserId AND r.followerUserId = ?) 
-               WHERE r.followerUserId = ? OR s.userId = ? 
-               GROUP BY s.id
-               LIMIT 4`;
+    const userId = req.query.userId;
 
-    db.query(q, [userInfo.id, userInfo.id, userInfo.id], (err, data) => {
-      if (err) return res.status(500).json(err);
-      return res.status(200).json(data);
-    });
+    if (userId) {
+      const q = `SELECT s.*, u.name FROM stories AS s 
+                 JOIN users AS u ON (u.id = s.userId) 
+                 WHERE s.userId = ? 
+                 ORDER BY s.id DESC`;
+      db.query(q, [userId], (err, data) => {
+        if (err) return res.status(500).json(err);
+        return res.status(200).json(data);
+      });
+    } else {
+      const q = `SELECT s.*, u.name FROM stories AS s 
+                 JOIN users AS u ON (u.id = s.userId)
+                 LEFT JOIN relationships AS r ON (s.userId = r.followedUserId AND r.followerUserId = ?) 
+                 WHERE r.followerUserId = ? OR s.userId = ? 
+                 GROUP BY s.id
+                 ORDER BY s.id DESC`;
+
+      db.query(q, [userInfo.id, userInfo.id, userInfo.id], (err, data) => {
+        if (err) return res.status(500).json(err);
+        return res.status(200).json(data);
+      });
+    }
   });
 };
 

@@ -6,6 +6,16 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../context/authContext";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { makeRequest } from "../../axios";
+
+const getImgPath = (img, isCover = false) => {
+  if (!img) {
+    return isCover 
+      ? "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 300' fill='%235271ff'><rect width='800' height='300'/></svg>"
+      : "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='12' fill='%23e2e8f0'/><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z' fill='%2394a3b8'/></svg>";
+  }
+  return img.startsWith("http") ? img : "/upload/" + img;
+};
+
 const Share = () => {
   const [file, setFile] = useState(null);
   const [desc, setDesc] = useState("");
@@ -49,7 +59,7 @@ const Share = () => {
       <div className="container">
         <div className="top">
           <div className="left">
-            <img src={ currentUser.profilePic} alt="" />
+            <img src={getImgPath(currentUser.profilePic)} alt="" />
             <input
               type="text"
               placeholder={`What's on your mind ${currentUser.name}?`}

@@ -11,6 +11,22 @@ export const getUser = (req, res) => {
     return res.json(info);
   });
 };
+export const getUsers = (req, res) => {
+  const token = req.cookies.accessToken;
+  if (!token) return res.status(401).json("Not authenticated!");
+
+  jwt.verify(token, "secretkey", (err, userInfo) => {
+    if (err) return res.status(403).json("Token is not valid!");
+
+    const q = "SELECT id, username, name, profilePic, city FROM users WHERE id != ?";
+
+    db.query(q, [userInfo.id], (err, data) => {
+      if (err) return res.status(500).json(err);
+      return res.json(data);
+    });
+  });
+};
+
 import bcrypt from "bcryptjs";
 
 export const updateUser = (req, res) => {
