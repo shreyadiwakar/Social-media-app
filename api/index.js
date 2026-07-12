@@ -10,6 +10,11 @@ import cors from "cors";
 import multer from "multer";
 import cookieParser from "cookie-parser";
 import storyRoutes from "./routes/stories.js";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 //middlewares
 app.use((req, res, next) => {
@@ -19,11 +24,14 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: process.env.CLIENT_URL || "http://localhost:3000",
     credentials: true,
   })
 );
 app.use(cookieParser());
+
+// Serve uploaded files statically
+app.use("/upload", express.static(path.join(__dirname, "../client/public/upload")));
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -49,6 +57,16 @@ app.use("/api/likes", likeRoutes);
 app.use("/api/relationships", relationshipRoutes);
 app.use("/api/stories", storyRoutes);
 
-app.listen(8800, () => {
-  console.log("API is running on port 8800!");
+// Serve frontend static build files in production
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../client/build")));
+  
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../client/build", "index.html"));
+  });
+}
+
+const PORT = process.env.PORT || 8800;
+app.listen(PORT, () => {
+  console.log(`API is running on port ${PORT}!`);
 });

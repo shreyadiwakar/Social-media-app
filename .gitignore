@@ -1,0 +1,21 @@
+# Dependency folders
+node_modules/
+api/node_modules/
+client/node_modules/
+
+# Private Environment variables
+.env
+api/.env
+
+# Production Builds
+build/
+client/build/
+
+# Operating System & IDE files
+.DS_Store
+.idea/
+.vscode/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
